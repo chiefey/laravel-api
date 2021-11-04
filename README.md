@@ -1,3 +1,21 @@
+## Steps to Recreate
+1. Follow the instructions to [Install Laravel](https://laravel.com/docs/8.x/installation#getting-started-on-macos) (I'm on macOS)
+```
+$ cd <project-parent-folder>
+$ curl -s "https://laravel.build/laravel-api" | bash
+$ cd laravel-api
+$ ./vendor/bin/sail up
+```
+2. Commit to Git
+```
+$ git init
+$ git add .
+$ git commit -m "Install Laravel 8"
+$ git branch -M main
+$ git remote add origin https://github.com/chiefey/laravel-api.git
+$ git push -u origin main
+```
+
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
 
 <p align="center">
