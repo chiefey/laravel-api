@@ -14,7 +14,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+        return 'UserController index v2';
     }
 
     /**
@@ -46,7 +46,7 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        return 'user show v2';
+        return "UserController show v2 ($id)";
     }
 
     /**
