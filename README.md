@@ -16,6 +16,11 @@ $ git remote add origin https://github.com/chiefey/laravel-api.git
 $ git push -u origin main
 ```
 
+2. Configure [Xdebug](https://laravel.com/docs/8.x/sail#debugging-with-xdebug) with Visual Studio Code
+```
+$ cp .vscode/launch.example.json .vscode/launch.json
+```
+
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
 
 <p align="center">
