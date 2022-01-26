@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
 
 class APIVersion
 {
@@ -14,9 +15,19 @@ class APIVersion
      * @param  \Closure  $next
      * @return mixed
      */
-    public function handle(Request $request, Closure $next, $guard)
+    public function handle(Request $request, Closure $next)
     {
-        config(['app.api.version' => $guard]);
+        list($api, $routeVersion, $extra) = explode('/', Route::getCurrentRoute()->uri, 3);
+        list($requestApi, $requestVersion, $requestExtra) = explode('/', $request->path(), 3);
+
+        if ($routeVersion != $requestVersion) {
+            $proxy = Request::create(
+                implode('/', [$requestApi, $routeVersion, $requestExtra]),
+                $request->method(),
+                $request->all()
+            );
+            return app()->handle($proxy);
+        }
         return $next($request);
     }
 }
