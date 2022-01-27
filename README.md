@@ -15,6 +15,26 @@ $ git branch -M main
 $ git remote add origin https://github.com/chiefey/laravel-api.git
 $ git push -u origin main
 ```
+3. Open in Visual Studio Code
+```
+F1 > Remote-Containers: Attach to Running Container: /laravel-api_laravel.test_1
+Open Folder: /var/www/html
+```
+4. Passport
+https://laravel.com/docs/8.x/passport#installation
+```
+$ composer require laravel/passport
+$ php artisan migrate
+uncomment database/seeders/DatabaseSeeder.php
+php artisan db:seed
+$ php artisan passport:install
+[php artisan passport:keys] Encryption keys already exist. Use the --force option to overwrite them.
+https://laravel.com/docs/8.x/passport#password-grant-tokens
+$ php artisan passport:client --password
+select * from users;
+$ php artisan route:list
+Git flow initialize
+```
 
 2. Configure [Xdebug](https://laravel.com/docs/8.x/sail#debugging-with-xdebug) with Visual Studio Code
 ```

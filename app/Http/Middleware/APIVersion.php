@@ -26,6 +26,7 @@ class APIVersion
                 $request->method(),
                 $request->all()
             );
+            $proxy->headers->set('Authorization', $request->headers->get('Authorization'));
             return app()->handle($proxy);
         }
         return $next($request);
