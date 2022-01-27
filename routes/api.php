@@ -13,12 +13,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::prefix('/v1')
-    ->middleware('auth:api')
-    ->namespace('V1')
-    ->group(base_path('routes/api_v1.php'));
-
 Route::prefix('/v2')
-    ->middleware('auth:api')
     ->namespace('V2')
     ->group(base_path('routes/api_v2.php'));
+
+Route::prefix('/v1')
+    ->namespace('V1')
+    ->group(base_path('routes/api_v1.php'));
