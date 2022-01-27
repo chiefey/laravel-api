@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f0031837afe9b57c13b90e1804225114",
+    "content-hash": "52c5ec8e4484728f63557f508e95277d",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -2138,6 +2138,66 @@
                 }
             ],
             "time": "2021-10-11T20:41:49+00:00"
+        },
+        {
+            "name": "mbpcoder/laravel-api-versioning",
+            "version": "v1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mbpcoder/laravel-api-versioning.git",
+                "reference": "1ddd59be0a5dbfb28fcc6ed9bb0ff284ae45c12f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mbpcoder/laravel-api-versioning/zipball/1ddd59be0a5dbfb28fcc6ed9bb0ff284ae45c12f",
+                "reference": "1ddd59be0a5dbfb28fcc6ed9bb0ff284ae45c12f",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/routing": "^5|^6|^7|^8"
+            },
+            "require-dev": {
+                "orchestra/testbench": "^4.0",
+                "phpunit/phpunit": "^8.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "MbpCoder\\ApiVersioning\\ApiVersioningServiceProvider"
+                    ],
+                    "aliases": {
+                        "ApiVersioning": "MbpCoder\\ApiVersioning\\ApiVersioningFacade"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "MbpCoder\\ApiVersioning\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Mahdi Bagheri",
+                    "email": "mahdi.bagheri@live.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Enable Api Versioning for Laravel",
+            "homepage": "https://github.com/mbpcoder/laravel-api-versioning",
+            "keywords": [
+                "api-versioning",
+                "mbpcoder"
+            ],
+            "support": {
+                "issues": "https://github.com/mbpcoder/laravel-api-versioning/issues",
+                "source": "https://github.com/mbpcoder/laravel-api-versioning/tree/v1.1"
+            },
+            "time": "2020-12-25T11:53:55+00:00"
         },
         {
             "name": "monolog/monolog",
