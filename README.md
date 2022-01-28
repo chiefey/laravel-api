@@ -15,30 +15,38 @@ $ git branch -M main
 $ git remote add origin https://github.com/chiefey/laravel-api.git
 $ git push -u origin main
 ```
-3. Open in Visual Studio Code
+3. Setup Git branching workflow
+> Download Git GUI (like [Sourcetree](https://www.sourcetreeapp.com))<br>
+In Sourctree setup [git-flow](https://danielkummer.github.io/git-flow-cheatsheet/) with `Repository > Git flow > Initialize Repository`<br>
+Then `Repository > Git flow > Start New Feature` to begin branch
+
+4. Open in Visual Studio Code
 ```
 F1 > Remote-Containers: Attach to Running Container: /laravel-api_laravel.test_1
 Open Folder: /var/www/html
 ```
-4. Passport
+5. Passport
 https://laravel.com/docs/8.x/passport#installation
 ```
 $ composer require laravel/passport
 $ php artisan migrate
 uncomment database/seeders/DatabaseSeeder.php
-php artisan db:seed
+$ php artisan db:seed
 $ php artisan passport:install
 [php artisan passport:keys] Encryption keys already exist. Use the --force option to overwrite them.
 https://laravel.com/docs/8.x/passport#password-grant-tokens
 $ php artisan passport:client --password
 select * from users;
 $ php artisan route:list
-Git flow initialize
 ```
-
-2. Configure [Xdebug](https://laravel.com/docs/8.x/sail#debugging-with-xdebug) with Visual Studio Code
+6. Configure [Xdebug](https://laravel.com/docs/8.x/sail#debugging-with-xdebug) with Visual Studio Code
 ```
 $ cp .vscode/launch.example.json .vscode/launch.json
+```
+7. Install [laravel-api-versioning](https://github.com/mbpcoder/laravel-api-versioning#installation)
+```
+$ composer require mbpcoder/laravel-api-versioning
+$ php artisan vendor:publish --provider="MbpCoder\ApiVersioning\ApiVersioningServiceProvider"
 ```
 
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
