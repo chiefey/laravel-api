@@ -7,13 +7,6 @@ use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
 
-/**
- * @OA\Info(
- *   title="Laravel API",
- *   version="0.1.0"
- * )
- */
-
 /** 
  * @OA\Server(
  *      url=L5_SWAGGER_CONST_HOST,

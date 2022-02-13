@@ -8,8 +8,24 @@ use Illuminate\Http\Request;
 class UserController extends Controller
 {
     /**
+     * @OA\Info(
+     *   title="Laravel API",
+     *   version="2.0.0"
+     * )
+     */
+
+    /**
      * Display a listing of the resource.
      *
+     * @OA\Get(
+     *      path="/v2/user",
+     *      tags={"User"},
+     *      security={
+     *          {"passport": {}},
+     *      },
+     *      @OA\Response(response="200", description="An example resource")
+     * )
+     * 
      * @return \Illuminate\Http\Response
      */
     public function index()

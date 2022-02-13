@@ -49,6 +49,38 @@ $ composer require mbpcoder/laravel-api-versioning
 $ php artisan vendor:publish --provider="MbpCoder\ApiVersioning\ApiVersioningServiceProvider"
 ```
 
+https://github.com/DarkaOnLine/L5-Swagger
+```
+$ composer require "darkaonline/l5-swagger"
+$ php artisan vendor:publish --provider "L5Swagger\L5SwaggerServiceProvider"
+$ php artisan l5-swagger:generate
+```
+
+200 response description
+    An example resource
+    A list of users.
+    successful operation
+    OK
+    GET: The resource has been fetched and transmitted in the message body.
+
+scanOptions
+  --pattern (-n)    Pattern of files to scan.
+                    ex: --pattern "*.php" or --pattern "/\.(phps|php)$/"
+
+^(?!app\/Http\/Controllers\/Api\/V[^1]+\/).*\.php
+^(?!app\/Http\/Controllers\/Api\/V(2|3|12)\/).*\.php
+^((?!app\/Http\/Controllers\/Api\/V)|app\/Http\/Controllers\/Api\/V1\/).*\.php
+^(?!app\/Http\/Controllers\/Api\/V([^1]|[^\/]{2,})).*\.php$
+
+app/Http/Controllers/Api/V1/UserController.php
+app/Http/Controllers/Api/V1/UserController2.php
+app/Http/Controllers/Api/V12/UserController.php
+app/Http/Controllers/Api/V2/UserController.php
+bootstrap/app.php
+app/Console/Kernel.php
+
+'pattern' => '/^(Http\/Controllers\/Api\/V1)\/.*\.php$/'
+
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
 
 <p align="center">

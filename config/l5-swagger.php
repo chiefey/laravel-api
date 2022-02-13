@@ -43,7 +43,59 @@ return [
                 ],
 
             ],
+            'scanOptions' => [
+                // 'exclude' => [
+                //     base_path('app/Http/Controllers/Api/V2')
+                // ]
+                'pattern' => '/^(Http\/Controllers\/Api\/V1)\/.*\.php$/'
+            ]
         ],
+        // 'v2' => [
+        //     'api' => [
+        //         'title' => 'L5 Swagger UI V2',
+        //     ],
+
+        //     'routes' => [
+        //         /*
+        //          * Route for accessing api documentation interface
+        //         */
+        //         'api' => 'api/v2/documentation',
+        //     ],
+        //     'paths' => [
+        //         /*
+        //          * Edit to include full URL in ui for assets
+        //         */
+        //         'use_absolute_path' => env('L5_SWAGGER_USE_ABSOLUTE_PATH', true),
+
+        //         /*
+        //          * File name of the generated json documentation file
+        //         */
+        //         'docs_json' => 'api-docs.json',
+
+        //         /*
+        //          * File name of the generated YAML documentation file
+        //         */
+        //         'docs_yaml' => 'api-docs.yaml',
+
+        //         /*
+        //         * Set this to `json` or `yaml` to determine which documentation file to use in UI
+        //         */
+        //         'format_to_use_for_docs' => env('L5_FORMAT_TO_USE_FOR_DOCS', 'json'),
+
+        //         /*
+        //          * Absolute paths to directory containing the swagger annotations are stored.
+        //         */
+        //         'annotations' => [
+        //             base_path('app'),
+        //         ],
+
+        //     ],
+        //     'scanOptions' => [
+        //         'exclude' => [
+        //             base_path('app/Http/Controllers/Api/V1')
+        //         ]
+        //     ]
+        // ],
     ],
     'defaults' => [
         'routes' => [
@@ -170,7 +222,7 @@ return [
                 ],
                 */
 
-                /* Open API 3.0 support
+                /* Open API 3.0 support */
                 'passport' => [ // Unique name of security
                     'type' => 'oauth2', // The type of the security scheme. Valid values are "basic", "apiKey" or "oauth2".
                     'description' => 'Laravel passport oauth2 security.',
@@ -185,6 +237,7 @@ return [
                         ],
                     ],
                 ],
+                /*
                 'sanctum' => [ // Unique name of security
                     'type' => 'apiKey', // Valid values are "basic", "apiKey" or "oauth2".
                     'description' => 'Enter token in format (Bearer <token>)',
@@ -280,8 +333,8 @@ return [
         /*
          * Uncomment to add constants which can be used in annotations
          */
-        // 'constants' => [
-        // 'L5_SWAGGER_CONST_HOST' => env('L5_SWAGGER_CONST_HOST', 'http://my-default-host.com'),
-        // ],
+        'constants' => [
+            'L5_SWAGGER_CONST_HOST' => env('L5_SWAGGER_CONST_HOST', 'http://my-default-host.com'),
+        ],
     ],
 ];

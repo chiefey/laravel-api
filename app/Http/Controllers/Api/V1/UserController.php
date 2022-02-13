@@ -8,6 +8,13 @@ use Illuminate\Http\Request;
 class UserController extends Controller
 {
     /**
+     * @OA\Info(
+     *   title="Laravel API",
+     *   version="1.0.0"
+     * )
+     */
+
+    /**
      * Display a listing of the resource.
      *
      * @OA\Get(
