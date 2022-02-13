@@ -10,6 +10,15 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @OA\Get(
+     *      path="/v1/user",
+     *      tags={"User"},
+     *      security={
+     *          {"passport": {}},
+     *      },
+     *      @OA\Response(response="200", description="An example resource")
+     * )
+     * 
      * @return \Illuminate\Http\Response
      */
     public function index()
