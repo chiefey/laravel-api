@@ -1,0 +1,20 @@
+<?php
+
+namespace {{ namespace }};
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+/**
+ * @OA\Schema(
+ *      title="{{ class }}",
+ *      description="{{ class }}",
+ *      type="object",
+ *      required={{{ schemaRequired }}}
+ * )
+ */
+
+class {{ class }} extends Model
+{
+    use HasFactory;
+}
