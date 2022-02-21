@@ -4,6 +4,12 @@
         "title": "Laravel API",
         "version": "1.0.0"
     },
+    "servers": [
+        {
+            "url": "http://localhost/api",
+            "description": "Local API Server"
+        }
+    ],
     "paths": {
         "/v1/user": {
             "get": {
@@ -26,6 +32,71 @@
         }
     },
     "components": {
+        "schemas": {
+            "User": {
+                "title": "User",
+                "description": "User",
+                "required": [
+                    "email",
+                    "password"
+                ],
+                "properties": {
+                    "id": {
+                        "title": "id",
+                        "description": "id",
+                        "type": "integer"
+                    },
+                    "name": {
+                        "title": "name",
+                        "description": "name",
+                        "type": "string"
+                    },
+                    "email": {
+                        "title": "email",
+                        "description": "email",
+                        "type": "string"
+                    },
+                    "emailVerifiedAt": {
+                        "title": "email_verified_at",
+                        "description": "email_verified_at",
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "password": {
+                        "title": "password",
+                        "description": "password",
+                        "type": "string"
+                    },
+                    "rememberToken": {
+                        "title": "remember_token",
+                        "description": "remember_token",
+                        "type": "string"
+                    },
+                    "createdAt": {
+                        "title": "created_at",
+                        "description": "created_at",
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updatedAt": {
+                        "title": "updated_at",
+                        "description": "updated_at",
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                },
+                "type": "object"
+            },
+            "poop": {
+                "title": "poop",
+                "description": "poop",
+                "required": [
+                    "email",
+                    "password"
+                ],
+                "type": "object"
+            }
+        },
         "securitySchemes": {
             "passport": {
                 "type": "oauth2",

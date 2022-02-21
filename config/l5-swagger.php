@@ -44,10 +44,10 @@ return [
 
             ],
             'scanOptions' => [
-                // 'exclude' => [
-                //     base_path('app/Http/Controllers/Api/V2')
-                // ]
-                'pattern' => '/^(Http\/Controllers\/Api\/V1)\/.*\.php$/'
+                'exclude' => [
+                    base_path('app/Http/Controllers/Api/V2')
+                ]
+                // 'pattern' => '/^(Http\/Controllers\/Api\/V1)\/.*\.php$/'
             ]
         ],
         // 'v2' => [
