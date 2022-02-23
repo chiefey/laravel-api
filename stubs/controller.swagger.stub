@@ -1,0 +1,381 @@
+<?php
+
+namespace {{ namespace }};
+
+use App\Http\Requests\Api\{{ version }}\{{ model }}\Store{{ model }}Request;
+use App\Http\Requests\Api\{{ version }}\{{ model }}\Update{{ model }}Request;
+use App\Http\Resources\Api\{{ version }}\DefaultInvalidResource;
+use App\Http\Resources\Api\{{ version }}\DefaultValidResource;
+use App\Http\Resources\Api\{{ version }}\{{ model }}Collection;
+use App\Http\Resources\Api\{{ version }}\{{ model }}Resource;
+use App\Models\{{ model }};
+// use App\Repositories\{{ model }}Repository;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+
+class {{ class }} extends Controller
+{
+    // /**
+    //  * @var {{ model }}Repository
+    //  */
+    // protected $repository;
+
+    /**
+     * {{ class }} constructor.
+     *
+     * @param  {{ model }}Repository $repository
+     *
+     */
+    public function __construct(/*{{ model }}Repository $repository*/)
+    {
+        $this->authorizeResource({{ model }}::class, '{{ modelSnake }}');
+        // $this->repository = $repository;
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+
+    /**
+     * @OA\Get(
+     *      path="/{{ version }}/{{ modelKebab }}s",
+     *      operationId="get{{ model }}List",
+     *      tags={"{{ model }}"},
+     *      summary="Get list of {{ model }}",
+     *      description="Returns list of {{ model }}",
+     *      security={{"passport": {}}},
+     *      @OA\Parameter(
+     *          ref="#/components/parameters/page"
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="Successful operation",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  @OA\Property(
+     *                      property="data",
+     *                      type="array",
+     *                      @OA\Items(
+     *                          ref="#/components/schemas/{{ model }}"
+     *                      )
+     *                  ),
+     *                  @OA\Property(
+     *                      property="links",
+     *                      type="object",
+     *                      @OA\Property(property="first", type="string", example=L5_SWAGGER_CONST_{{ modelUpperSnake }}_PAGE),
+     *                      @OA\Property(property="last", type="string", example=L5_SWAGGER_CONST_{{ modelUpperSnake }}_PAGE),
+     *                      @OA\Property(property="prev", type="integer", example="null"),
+     *                      @OA\Property(property="next", type="integer", example="null"),
+     *                  ),
+     *                  @OA\Property(
+     *                      property="meta",
+     *                      type="object",
+     *                      @OA\Property(property="currentPage", type="integer", example="1"),
+     *                      @OA\Property(property="from", type="integer", example="1"),
+     *                      @OA\Property(property="lastPage", type="integer", example="1"),
+     *                      @OA\Property(
+     *                          property="links",
+     *                          type="array",
+     *                          @OA\Items(
+     *                              type="object"
+     *                          ),
+     *                          example={
+     *                              {
+     *                                  "url": null,
+     *                                  "label": "&laquo; Previous",
+     *                                  "active": false
+     *                              },
+     *                              {
+     *                                  "url": L5_SWAGGER_CONST_{{ modelUpperSnake }}_PAGE,
+     *                                  "label": "1",
+     *                                  "active": true
+     *                              },
+     *                              {
+     *                                  "url": null,
+     *                                  "label": "Next &raquo;",
+     *                                  "active": false
+     *                              }
+     *                          }
+     *                      ),
+     *                      @OA\Property(property="path", type="string", example=L5_SWAGGER_CONST_{{ modelUpperSnake }}_PATH),
+     *                      @OA\Property(property="perPage", type="integer", example="10"),
+     *                      @OA\Property(property="to", type="integer", example="1"),
+     *                      @OA\Property(property="total", type="integer", example="1"),
+     *                  ),
+     *              )
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=401,
+     *          ref="#/components/responses/401"
+     *      ),
+     *      @OA\Response(
+     *          response=403,
+     *          ref="#/components/responses/403"
+     *      )
+     * )
+     */
+    public function index()
+    {
+        // $this->repository->pushCriteria(app('App\Criteria\RequestCriteria'));
+        // $this->repository->pushCriteria(new \App\Criteria\{{ model }}Criteria());
+        // ${{ modelCamel }}s = $this->repository->paginate($this->paginateLimit);
+        // return new {{ model }}Collection(${{ modelCamel }}s);
+        return {{ model }}::all();
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        //
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  Store{{ model }}Request  $request
+     * @return \Illuminate\Http\Response
+     */
+
+    /**
+     * @OA\Post(
+     *      path="/v1/{{ modelKebab }}s",
+     *      summary="Create {{ model }}",
+     *      description="Add {{ model }}",
+     *      operationId="add{{ model }}",
+     *      tags={"{{ model }}"},
+     *      security={{"passport": {}}},
+     *      @OA\RequestBody(
+     *          required=true,
+     *          @OA\JsonContent(
+     *              required={{{ postRequired }}},
+{{ postProperties }}
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=201,
+     *          description="Successful operation",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  ref="#/components/schemas/{{ model }}"
+     *              )
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=401,
+     *          ref="#/components/responses/401"
+     *      ),
+     *      @OA\Response(
+     *          response=403,
+     *          ref="#/components/responses/403"
+     *      ),
+     *      @OA\Response(
+     *          response=422,
+     *          ref="#/components/responses/422"
+     *      )
+     * )
+     */
+    public function store(Store{{ model }}Request $request)
+    {
+        // ${{ modelCamel }} = $this->repository->create($request->all());
+        // return new {{ model }}Resource(${{ modelCamel }});
+        return {{ model }}::create($request->all());
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  \{{ namespacedModel }}  ${{ modelVariable }}
+     * @return \Illuminate\Http\Response
+     */
+
+    /**
+     * @OA\Get(
+     *      path="/v1/{{ modelKebab }}s/{id}",
+     *      operationId="get{{ model }}ById",
+     *      tags={"{{ model }}"},
+     *      summary="Get {{ model }} By Id",
+     *      description="Returns updated {{ model }} data",
+     *      security={{"passport": {}}},
+     *      @OA\Parameter(
+     *          name="id",
+     *          description="{{ model }} id",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="Successful operation",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  ref="#/components/schemas/{{ model }}"
+     *              )
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=401,
+     *          ref="#/components/responses/401"
+     *      ),
+     *      @OA\Response(
+     *          response=403,
+     *          ref="#/components/responses/403"
+     *      ),
+     *      @OA\Response(
+     *          response=404,
+     *          ref="#/components/responses/404"
+     *      )
+     * )
+     */
+    public function show({{ model }} ${{ modelVariable }})
+    {
+        // $this->repository->pushCriteria(app('App\Criteria\RequestCriteria'));
+        // ${{ modelCamel }} = $this->repository->find(${{ modelCamel }}->id);
+        // return new {{ model }}Resource(${{ modelCamel }});
+        return {{ model }}::find(${{ modelCamel }}->id);
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  \{{ namespacedModel }}  ${{ modelVariable }}
+     * @return \Illuminate\Http\Response
+     */
+    public function edit({{ model }} ${{ modelVariable }})
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  Update{{ model }}Request  $request
+     * @param  \{{ namespacedModel }}  ${{ modelVariable }}
+     * @return \Illuminate\Http\Response
+     */
+
+    /**
+     * @OA\Put(
+     *      path="/v1/{{ modelKebab }}s/{id}",
+     *      operationId="update{{ model }}",
+     *      tags={"{{ model }}"},
+     *      summary="Update existing {{ model }}",
+     *      description="Returns updated {{ model }} data",
+     *      security={{"passport": {}}},
+     *      @OA\Parameter(
+     *          name="id",
+     *          description="{{ model }} id",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              ref="#/components/schemas/{{ model }}/properties/id"
+     *          )
+     *      ),
+     *      @OA\RequestBody(
+     *          required=true,
+     *          @OA\JsonContent(
+     *              required={{{ postRequired }}},
+{{ postProperties }}
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=202,
+     *          description="Successful operation",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  ref="#/components/schemas/{{ model }}"
+     *              )
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=401,
+     *          ref="#/components/responses/401"
+     *      ),
+     *      @OA\Response(
+     *          response=403,
+     *          ref="#/components/responses/403"
+     *      ),
+     *      @OA\Response(
+     *          response=404,
+     *          ref="#/components/responses/404"
+     *      ),
+     *      @OA\Response(
+     *          response=422,
+     *          ref="#/components/responses/422"
+     *      )
+     * )
+     */
+    public function update(Update{{ model }}Request $request, {{ model }} ${{ modelVariable }})
+    {
+        // ${{ modelCamel }} = $this->repository->update($request->all(), ${{ modelCamel }}->id);
+        // return new {{ model }}Resource(${{ modelCamel }});
+        return {{ model }}::update($request->all(), ${{ modelCamel }}->id)
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \{{ namespacedModel }}  ${{ modelVariable }}
+     * @return \Illuminate\Http\Response
+     */
+
+    /**
+     * @OA\Delete(
+     *      path="/v1/{{ modelKebab }}s/{id}",
+     *      operationId="delete{{ model }}ById",
+     *      tags={"{{ model }}"},
+     *      summary="Delete {{ model }}",
+     *      description="Returns updated {{ model }} data",
+     *      security={{"passport": {}}},
+     *      @OA\Parameter(
+     *          name="id",
+     *          description="{{ model }} id",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="Successful operation",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  @OA\Property(property="message", type="string", example="{{ model }} deleted."),
+     *                  @OA\Property(property="deleted", type="bool", example="true")
+     *              )
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=401,
+     *          ref="#/components/responses/401"
+     *      ),
+     *      @OA\Response(
+     *          response=403,
+     *          ref="#/components/responses/403"
+     *      ),
+     *      @OA\Response(
+     *          response=404,
+     *          ref="#/components/responses/404"
+     *      )
+     * )
+     */
+    public function destroy({{ model }} ${{ modelVariable }})
+    {
+        // $deleted = $this->repository->delete(${{ modelCamel }}->id);
+        // return new DefaultValidResource(collect(['message' => '{{ model }} deleted.', 'deleted' => $deleted]));
+        return {{ model }}::delete(${{ modelCamel }}->id;
+    }
+}

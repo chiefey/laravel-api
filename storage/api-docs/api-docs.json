@@ -86,15 +86,6 @@
                     }
                 },
                 "type": "object"
-            },
-            "poop": {
-                "title": "poop",
-                "description": "poop",
-                "required": [
-                    "email",
-                    "password"
-                ],
-                "type": "object"
             }
         },
         "securitySchemes": {
