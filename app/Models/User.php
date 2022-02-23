@@ -8,9 +8,98 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
+/**
+ * @OA\Schema(
+ *      title="User",
+ *      description="User",
+ *      type="object",
+ *      required={"email","password"}
+ * )
+ */
+
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
+
+    /**
+     * @OA\Property(
+     *      property="id",
+     *      title="id",
+     *      description="id"
+     * )
+     *
+     * @var integer
+     */
+
+    /**
+     * @OA\Property(
+     *      property="name",
+     *      title="name",
+     *      description="name"
+     * )
+     *
+     * @var string
+     */
+
+    /**
+     * @OA\Property(
+     *      property="email",
+     *      title="email",
+     *      description="email"
+     * )
+     *
+     * @var string
+     */
+
+    /**
+     * @OA\Property(
+     *      property="emailVerifiedAt",
+     *      title="email_verified_at",
+     *      description="email_verified_at"
+     * )
+     *
+     * @var \DateTime
+     */
+
+    /**
+     * @OA\Property(
+     *      property="password",
+     *      title="password",
+     *      description="password"
+     * )
+     *
+     * @var string
+     */
+
+    /**
+     * @OA\Property(
+     *      property="rememberToken",
+     *      title="remember_token",
+     *      description="remember_token"
+     * )
+     *
+     * @var string
+     */
+
+    /**
+     * @OA\Property(
+     *      property="createdAt",
+     *      title="created_at",
+     *      description="created_at"
+     * )
+     *
+     * @var \DateTime
+     */
+
+    /**
+     * @OA\Property(
+     *      property="updatedAt",
+     *      title="updated_at",
+     *      description="updated_at"
+     * )
+     *
+     * @var \DateTime
+     */
 
     /**
      * The attributes that are mass assignable.
