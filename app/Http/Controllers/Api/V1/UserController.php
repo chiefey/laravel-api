@@ -125,7 +125,7 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return User::create($request->all());
     }
 
     /**
@@ -136,7 +136,7 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        return "UserController show v1 ($id)";
+        return User::find($id);
     }
 
     /**
@@ -159,7 +159,7 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        return User::find($id)->update($request->all());
     }
 
     /**
@@ -170,6 +170,6 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        return User::destroy($id);
     }
 }
