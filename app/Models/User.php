@@ -25,7 +25,8 @@ class User extends Authenticatable
      * @OA\Property(
      *      property="id",
      *      title="id",
-     *      description="id"
+     *      description="id",
+     *      minimum=1
      * )
      *
      * @var integer
@@ -45,7 +46,8 @@ class User extends Authenticatable
      * @OA\Property(
      *      property="email",
      *      title="email",
-     *      description="email"
+     *      description="email",
+     *      format="email"
      * )
      *
      * @var string

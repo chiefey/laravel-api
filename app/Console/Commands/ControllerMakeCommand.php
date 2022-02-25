@@ -8,6 +8,8 @@ namespace App\Console\Commands;
 // use Symfony\Component\Console\Input\InputOption;
 use Illuminate\Routing\Console\ControllerMakeCommand as IlluminateControllerMakeCommand;
 use Illuminate\Support\Str;
+// use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
 
 class ControllerMakeCommand extends IlluminateControllerMakeCommand
 {
@@ -90,19 +92,17 @@ class ControllerMakeCommand extends IlluminateControllerMakeCommand
     //     return $rootNamespace.'\Http\Controllers';
     // }
 
-    // /**
-    //  * Build the class with the given name.
-    //  *
-    //  * Remove the base controller import if we are already in the base namespace.
-    //  *
-    //  * @param  string  $name
-    //  * @return string
-    //  */
-    // protected function buildClass($name)
-    // {
-    //     $controllerNamespace = $this->getNamespace($name);
+    /**
+     * Build the class with the given name.
+     *
+     * @param  string  $name
+     * @return string
+     */
+    protected function buildClass($name)
+    {
+        $controllerNamespace = $this->getNamespace($name);
 
-    //     $replace = [];
+        $replace = [];
 
     //     if ($this->option('parent')) {
     //         $replace = $this->buildParentReplacements();
@@ -114,10 +114,35 @@ class ControllerMakeCommand extends IlluminateControllerMakeCommand
 
     //     $replace["use {$controllerNamespace}\Controller;\n"] = '';
 
-    //     return str_replace(
-    //         array_keys($replace), array_values($replace), parent::buildClass($name)
-    //     );
-    // }
+        $replace['{{ version }}'] = Str::lower(Str::afterLast($controllerNamespace, '\\'));
+
+        $modelName = $this->option('model');
+        $modelClass = $this->qualifyModel($modelName);
+        $model = new $modelClass;
+        $columns = collect(DB::select('describe ' . $model->getTable()))->pluck('Field');
+
+        $filtered = $columns->filter(function ($value) use ($model) {
+            return in_array($value, $model->getFillable());
+        });
+
+        $required = $filtered->map(function ($item) {
+            return '"' . Str::camel($item) . '"';
+        })->implode(',');
+
+        $properties = $filtered->map(function ($item) use ($modelName) {
+            return "     *              @OA\Property(
+     *                  property=\"" . Str::camel($item) . "\",
+     *                  ref=\"#/components/schemas/$modelName/properties/" . Str::camel($item) . "\"
+     *              )";
+        })->implode(",\n");
+
+        $replace['{{ postRequired }}'] = $required;
+        $replace['{{ postProperties }}'] = $properties;
+
+        return str_replace(
+            array_keys($replace), array_values($replace), parent::buildClass($name)
+        );
+    }
 
     // /**
     //  * Build the replacements for a parent controller.

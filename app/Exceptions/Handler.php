@@ -3,10 +3,52 @@
 namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Throwable;
 
 class Handler extends ExceptionHandler
 {
+    /**
+     *  @OA\Response(
+     *      response=401,
+     *      description="Error: Unauthorized",
+     *      @OA\JsonContent(
+     *          @OA\Property(property="message", type="string", example="Unauthenticated.")
+     *      )
+     *  ),
+     */
+
+    /**
+     *  @OA\Response(
+     *      response="403",
+     *      description="Error: Forbidden",
+     *      @OA\JsonContent(
+     *          @OA\Property(property="message", type="string", example="This action is unauthorized.")
+     *      )
+     *  ),
+     */
+
+    /**
+     *  @OA\Response(
+     *      response=404,
+     *      description="Resource Not Found",
+     *      @OA\JsonContent(
+     *          @OA\Property(property="message", type="string", example="Record not found.")
+     *      )
+     *  ),
+     */
+
+    /**
+     *  @OA\Response(
+     *      response=422,
+     *      description="Error: Unprocessable Entity",
+     *      @OA\JsonContent(
+     *          type="object",
+     *          example={"message": "The given data was invalid.","errors": {"name": {"The name field is required."}}}
+     *      )
+     *  ),
+     */
+
     /**
      * A list of the exception types that are not reported.
      *
@@ -36,6 +78,14 @@ class Handler extends ExceptionHandler
     {
         $this->reportable(function (Throwable $e) {
             //
+        });
+        
+        $this->renderable(function (NotFoundHttpException $e, $request) {
+            if ($request->is('api/*')) {
+                return response()->json([
+                    'message' => 'Record not found.'
+                ], 404);
+            }
         });
     }
 }

@@ -14,6 +14,25 @@ use Illuminate\Routing\Controller as BaseController;
  * )
  */
 
+/**
+ * @OA\Info(
+ *   title="Laravel API",
+ *   version="1.0.0"
+ * )
+ */
+
+/**
+ *  @OA\Parameter(
+ *      name="page",
+ *      description="data page",
+ *      in="query",
+ *      @OA\Schema(
+ *          type="integer",
+ *          minimum=1
+ *      )
+ *  )
+ */
+
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;

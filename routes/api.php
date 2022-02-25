@@ -18,5 +18,5 @@ Route::prefix('/v2')
     ->group(base_path('routes/api_v2.php'));
 
 Route::prefix('/v1')
-    ->namespace('V1')
+    // ->namespace('V1')
     ->group(base_path('routes/api_v1.php'));

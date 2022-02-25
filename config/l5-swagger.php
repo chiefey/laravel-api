@@ -335,6 +335,8 @@ return [
          */
         'constants' => [
             'L5_SWAGGER_CONST_HOST' => env('L5_SWAGGER_CONST_HOST', 'http://my-default-host.com'),
+            'L5_SWAGGER_CONST_USER_PATH' => env('L5_SWAGGER_CONST_HOST', 'http://my-default-host.com') . "/v1/users",
+            'L5_SWAGGER_CONST_USER_PAGE' => env('L5_SWAGGER_CONST_HOST', 'http://my-default-host.com') . "/v1/users?page=1",
         ],
     ],
 ];
