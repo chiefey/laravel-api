@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\Api\V1;
 
-use App\Http\Requests\Api\v1\User\StoreUserRequest;
-use App\Http\Requests\Api\v1\User\UpdateUserRequest;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\Api\v1\StoreUserRequest;
+use App\Http\Requests\Api\v1\UpdateUserRequest;
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -127,7 +129,7 @@ class UserController extends Controller
      *      @OA\RequestBody(
      *          required=true,
      *          @OA\JsonContent(
-     *              required={"name","email","password"},
+     *              required={"name","email","password","password_confirmation"},
      *              @OA\Property(
      *                  property="name",
      *                  ref="#/components/schemas/User/properties/name"
@@ -138,7 +140,17 @@ class UserController extends Controller
      *              ),
      *              @OA\Property(
      *                  property="password",
-     *                  ref="#/components/schemas/User/properties/password"
+     *                  title="password",
+     *                  description="password",
+     *                  type="string",
+     *                  minLength=8
+     *              ),
+     *              @OA\Property(
+     *                  property="password_confirmation",
+     *                  title="password_confirmation",
+     *                  description="password_confirmation",
+     *                  type="string",
+     *                  minLength=8
      *              )
      *          )
      *      ),
@@ -168,7 +180,11 @@ class UserController extends Controller
      */
     public function store(StoreUserRequest $request)
     {
-        return User::create($request->all());
+        return User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+        ]);
     }
 
     /**
@@ -267,14 +283,6 @@ class UserController extends Controller
      *              @OA\Property(
      *                  property="name",
      *                  ref="#/components/schemas/User/properties/name"
-     *              ),
-     *              @OA\Property(
-     *                  property="email",
-     *                  ref="#/components/schemas/User/properties/email"
-     *              ),
-     *              @OA\Property(
-     *                  property="password",
-     *                  ref="#/components/schemas/User/properties/password"
      *              )
      *          )
      *      ),
@@ -308,7 +316,9 @@ class UserController extends Controller
      */
     public function update(UpdateUserRequest $request, User $user)
     {
-        return User::update($request->all(), $user->id);
+        // $input = $request->only(array_diff($user->getFillable(), ['email', 'password']));
+        $user->update($request->except(['email', 'password']));
+        return $user;
     }
 
     /**
@@ -341,8 +351,7 @@ class UserController extends Controller
      *          @OA\MediaType(
      *              mediaType="application/json",
      *              @OA\Schema(
-     *                  @OA\Property(property="message", type="string", example="User deleted."),
-     *                  @OA\Property(property="deleted", type="bool", example="true")
+     *                  example="1"
      *              )
      *          )
      *      ),
@@ -362,6 +371,6 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        return User::delete($user->id);
+        return $user->delete();
     }
 }

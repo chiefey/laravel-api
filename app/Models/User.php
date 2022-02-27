@@ -36,7 +36,8 @@ class User extends Authenticatable
      * @OA\Property(
      *      property="name",
      *      title="name",
-     *      description="name"
+     *      description="name",
+     *      maxLength=255
      * )
      *
      * @var string
@@ -47,7 +48,8 @@ class User extends Authenticatable
      *      property="email",
      *      title="email",
      *      description="email",
-     *      format="email"
+     *      format="email",
+     *      maxLength=255
      * )
      *
      * @var string
@@ -61,26 +63,6 @@ class User extends Authenticatable
      * )
      *
      * @var \DateTime
-     */
-
-    /**
-     * @OA\Property(
-     *      property="password",
-     *      title="password",
-     *      description="password"
-     * )
-     *
-     * @var string
-     */
-
-    /**
-     * @OA\Property(
-     *      property="rememberToken",
-     *      title="remember_token",
-     *      description="remember_token"
-     * )
-     *
-     * @var string
      */
 
     /**

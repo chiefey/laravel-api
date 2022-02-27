@@ -29,7 +29,7 @@ class UserPolicy
      */
     public function view(User $user, User $userModel)
     {
-        //
+        return true;
     }
 
     /**
@@ -40,7 +40,7 @@ class UserPolicy
      */
     public function create(User $user)
     {
-        //
+        return true;
     }
 
     /**
@@ -52,7 +52,7 @@ class UserPolicy
      */
     public function update(User $user, User $userModel)
     {
-        //
+        return true;
     }
 
     /**
@@ -64,6 +64,6 @@ class UserPolicy
      */
     public function delete(User $user, User $userModel)
     {
-        //
+        return true;
     }
 }

@@ -138,7 +138,8 @@
                                 "required": [
                                     "name",
                                     "email",
-                                    "password"
+                                    "password",
+                                    "password_confirmation"
                                 ],
                                 "properties": {
                                     "name": {
@@ -148,7 +149,16 @@
                                         "$ref": "#/components/schemas/User/properties/email"
                                     },
                                     "password": {
-                                        "$ref": "#/components/schemas/User/properties/password"
+                                        "title": "password",
+                                        "description": "password",
+                                        "type": "string",
+                                        "minLength": 8
+                                    },
+                                    "password_confirmation": {
+                                        "title": "password_confirmation",
+                                        "description": "password_confirmation",
+                                        "type": "string",
+                                        "minLength": 8
                                     }
                                 },
                                 "type": "object"
@@ -261,12 +271,6 @@
                                 "properties": {
                                     "name": {
                                         "$ref": "#/components/schemas/User/properties/name"
-                                    },
-                                    "email": {
-                                        "$ref": "#/components/schemas/User/properties/email"
-                                    },
-                                    "password": {
-                                        "$ref": "#/components/schemas/User/properties/password"
                                     }
                                 },
                                 "type": "object"
@@ -328,17 +332,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "properties": {
-                                        "message": {
-                                            "type": "string",
-                                            "example": "User deleted."
-                                        },
-                                        "deleted": {
-                                            "type": "bool",
-                                            "example": "true"
-                                        }
-                                    },
-                                    "type": "object"
+                                    "example": "1"
                                 }
                             }
                         }
@@ -380,29 +374,21 @@
                     "name": {
                         "title": "name",
                         "description": "name",
-                        "type": "string"
+                        "type": "string",
+                        "maxLength": 255
                     },
                     "email": {
                         "title": "email",
                         "description": "email",
                         "type": "string",
-                        "format": "email"
+                        "format": "email",
+                        "maxLength": 255
                     },
                     "emailVerifiedAt": {
                         "title": "email_verified_at",
                         "description": "email_verified_at",
                         "type": "string",
                         "format": "date-time"
-                    },
-                    "password": {
-                        "title": "password",
-                        "description": "password",
-                        "type": "string"
-                    },
-                    "rememberToken": {
-                        "title": "remember_token",
-                        "description": "remember_token",
-                        "type": "string"
                     },
                     "createdAt": {
                         "title": "created_at",

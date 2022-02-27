@@ -2,8 +2,9 @@
 
 namespace {{ namespace }};
 
-use App\Http\Requests\Api\{{ version }}\{{ model }}\Store{{ model }}Request;
-use App\Http\Requests\Api\{{ version }}\{{ model }}\Update{{ model }}Request;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\Api\{{ version }}\Store{{ model }}Request;
+use App\Http\Requests\Api\{{ version }}\Update{{ model }}Request;
 // use App\Http\Resources\Api\{{ version }}\{{ model }}Resource;
 use App\Models\{{ model }};
 // use App\Repositories\{{ model }}Repository;
@@ -334,8 +335,7 @@ class {{ class }} extends Controller
      *          @OA\MediaType(
      *              mediaType="application/json",
      *              @OA\Schema(
-     *                  @OA\Property(property="message", type="string", example="{{ model }} deleted."),
-     *                  @OA\Property(property="deleted", type="bool", example="true")
+     *                  example="1"
      *              )
      *          )
      *      ),
