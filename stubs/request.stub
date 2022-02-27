@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Api\V1;
+namespace {{ namespace }};
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateUserRequest extends FormRequest
+class {{ class }} extends FormRequest
 {
     /**
      * Prepare the data for validation.
@@ -13,8 +13,7 @@ class UpdateUserRequest extends FormRequest
      */
     protected function prepareForValidation()
     {
-        // $this->replace($this->except(['email', 'password']));
-        $this->replace($this->only(array_diff((new \App\Models\User)->getFillable(), ['email', 'password'])));
+        {{ prepareForValidation }}
     }
 
     /**
@@ -35,9 +34,7 @@ class UpdateUserRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => ['sometimes', 'required', 'string', 'max:255'],
-            // 'email' => ['sometimes', 'required', 'string', 'email', 'max:255', 'unique:users'],
-            // 'password' => ['sometimes', 'required', 'confirmed', Rules\Password::defaults()],
+            {{ rules }}
         ];
     }
 
@@ -49,10 +46,16 @@ class UpdateUserRequest extends FormRequest
      */
     public function withValidator($validator)
     {
-        $validator->after(function ($validator) {
-            if (empty($this->request->all())) {
-                $validator->errors()->add('requestBody', 'At least one attribute must be specified');
-            }
-        });
+        {{ withValidator }}
+    }
+
+    /**
+     * Handle a passed validation attempt.
+     *
+     * @return void
+     */
+    protected function passedValidation()
+    {
+        //
     }
 }

@@ -180,11 +180,7 @@ class UserController extends Controller
      */
     public function store(StoreUserRequest $request)
     {
-        return User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-        ]);
+        return User::create($request->all());
     }
 
     /**
@@ -316,8 +312,7 @@ class UserController extends Controller
      */
     public function update(UpdateUserRequest $request, User $user)
     {
-        // $input = $request->only(array_diff($user->getFillable(), ['email', 'password']));
-        $user->update($request->except(['email', 'password']));
+        $user->update($request->all());
         return $user;
     }
 
