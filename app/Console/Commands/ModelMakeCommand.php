@@ -31,11 +31,13 @@ class ModelMakeCommand extends IlluminateModelMakeCommand
     {
         $this->definition = json_decode($this->option('definition'), true);
 
-        $attributes = [];
-        foreach ($this->definition['attributes'] as $attribute) {
-            $attributes[] = new ColumnDefinition($attribute);
+        if($this->definition) {
+            $attributes = [];
+            foreach ($this->definition['attributes'] as $attribute) {
+                $attributes[] = new ColumnDefinition($attribute);
+            }
+            $this->definition['attributes'] = collect($attributes);
         }
-        $this->definition['attributes'] = collect($attributes);
 
         $replace = $this->buildSwaggerReplacements();
 
@@ -60,9 +62,12 @@ class ModelMakeCommand extends IlluminateModelMakeCommand
      */
     protected function buildSwaggerReplacements()
     {
-        $required = implode(',', array_map(function ($item) {
-            return '"' . Str::camel($item) . '"';
-        }, $this->definition['required']));
+        $required = '';
+        if(!empty($this->definition['required'])){
+            $required = implode(',', array_map(function ($item) {
+                return '"' . Str::camel($item) . '"';
+            }, $this->definition['required']));
+        }
 
         return [
             '{{ schemaRequired }}' => $required
@@ -77,14 +82,16 @@ class ModelMakeCommand extends IlluminateModelMakeCommand
      */
     protected function buildPropertyReplacements(array $replace)
     {
-        $properties = $this->definition['attributes']->map(function ($item) {
-            $type = 'integer';
-            if ($item->get('type') == 'string') {
-                $type = 'string';
-            } else if ($item->get('type') == 'timestamp') {
-                $type = '\DateTime';
-            }
-            return "    /**
+        $properties = '';
+        if(!empty($this->definition['attributes'])){
+            $properties = $this->definition['attributes']->map(function ($item) {
+                $type = 'integer';
+                if ($item->get('type') == 'string') {
+                    $type = 'string';
+                } else if ($item->get('type') == 'timestamp') {
+                    $type = '\DateTime';
+                }
+                return "    /**
      * @OA\Property(
      *      property=\"" . Str::camel($item->get('name')) . "\",
      *      title=\"{$item->get('name')}\",
@@ -93,7 +100,8 @@ class ModelMakeCommand extends IlluminateModelMakeCommand
      *
      * @var $type
      */";
-        })->implode("\n\n");
+            })->implode("\n\n");
+        }
 
         return array_merge($replace, [
             '{{ swaggerProperties }}' => $properties
@@ -108,12 +116,15 @@ class ModelMakeCommand extends IlluminateModelMakeCommand
      */
     protected function buildFillableReplacements(array $replace)
     {
-        $fillable = collect($this->definition['fillable'])->map(function ($item) {
-            return "'$item'";
-        });
+        $fillable = '';
+        if(!empty($this->definition['fillable'])){
+            $fillable = collect($this->definition['fillable'])->map(function ($item) {
+                return "'$item'";
+            })->implode(",\n        ");
+        }
 
         return array_merge($replace, [
-            '{{ fillable }}' => $fillable->implode(",\n        ")
+            '{{ fillable }}' => $fillable
         ]);
     }
 
@@ -125,12 +136,15 @@ class ModelMakeCommand extends IlluminateModelMakeCommand
      */
     protected function buildHiddenReplacements(array $replace)
     {
-        $hidden = collect($this->definition['hidden'])->map(function ($item) {
-            return "'$item'";
-        });
+        $hidden = '';
+        if(!empty($this->definition['hidden'])){
+            $hidden = collect($this->definition['hidden'])->map(function ($item) {
+                return "'$item'";
+            })->implode(",\n        ");
+        }
 
         return array_merge($replace, [
-            '{{ hidden }}' => $hidden->implode(",\n        ")
+            '{{ hidden }}' => $hidden
         ]);
     }
 
@@ -142,12 +156,15 @@ class ModelMakeCommand extends IlluminateModelMakeCommand
      */
     protected function buildCastsReplacements(array $replace)
     {
-        $casts = collect($this->definition['casts'])->map(function ($item, $key) {
-            return "'$key' => '$item'";
-        });
+        $casts = '';
+        if(!empty($this->definition['casts'])){
+            $casts = collect($this->definition['casts'])->map(function ($item, $key) {
+                return "'$key' => '$item'";
+            })->implode(",\n        ");
+        }
 
         return array_merge($replace, [
-            '{{ casts }}' => $casts->implode(",\n        ")
+            '{{ casts }}' => $casts
         ]);
     }
 
