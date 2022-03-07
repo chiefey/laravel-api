@@ -2,7 +2,6 @@
 
 namespace App\Console\Commands;
 
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Symfony\Component\Console\Input\InputOption;
 
@@ -20,17 +19,18 @@ class RequestMakeCommand extends \Illuminate\Foundation\Console\RequestMakeComma
 
         $isUpdate = Str::contains($this->argument('name'), 'Update');
 
-        if ($this->option('model')) {
+        if ($this->option('definition')) {
             $modelName = $this->option('model');
             $modelClass = $this->qualifyModel($modelName);
             $model = new $modelClass;
-            $columns = collect(DB::select('describe ' . $model->getTable()))->pluck('Field');
+
+            $columns = collect(json_decode($this->option('definition'), true)['attributes'])->pluck('name');
 
             $filtered = $columns->filter(function ($value) use ($model) {
                 return in_array($value, $model->getFillable());
             });
 
-            $prepareForValidation = $filtered->map(function ($item) { return "'$item'"; })->implode(',');
+            $prepareForValidation = $filtered->map(function ($item) {return "'$item'";})->implode(',');
 
             $rules = $filtered->map(function ($item) use ($isUpdate) {
                 $sometimes = $isUpdate ? "'sometimes', " : '';
@@ -69,6 +69,7 @@ class RequestMakeCommand extends \Illuminate\Foundation\Console\RequestMakeComma
     {
         return [
             ['model', 'm', InputOption::VALUE_OPTIONAL, 'Indicates the model tied to this request.'],
+            ['definition', null, InputOption::VALUE_REQUIRED, 'Indicates the definition of the generated model'],
         ];
     }
 }

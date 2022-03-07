@@ -17,7 +17,6 @@ class MigrationCreator extends \Illuminate\Database\Migrations\MigrationCreator
      */
     public function create($name, $path, $table = null, $create = false, $definition = null)
     {
-        dd($definition);
         $this->ensureMigrationDoesntAlreadyExist($name, $path);
 
         // First we will get the stub file for the migration, which serves as a type
@@ -29,8 +28,6 @@ class MigrationCreator extends \Illuminate\Database\Migrations\MigrationCreator
 
         $this->files->ensureDirectoryExists(dirname($path));
 
-        $thisDefinition = $definition;
-
         $this->files->put(
             $path, $this->populateStub($name, $stub, $table, $definition)
         );
@@ -41,5 +38,43 @@ class MigrationCreator extends \Illuminate\Database\Migrations\MigrationCreator
         $this->firePostCreateHooks($table);
 
         return $path;
+    }
+
+    /**
+     * Populate the place-holders in the migration stub.
+     *
+     * @param  string  $name
+     * @param  string  $stub
+     * @param  string|null  $table
+     * @return string
+     */
+    protected function populateStub($name, $stub, $table, $definition = null)
+    {
+        $blueprint = '';
+
+        foreach (json_decode($definition, true)['attributes'] as $att) {
+            if (in_array($att['name'], ['id', 'created_at', 'updated_at'])) {
+                continue;
+            }
+            if ($att['name'] == 'remember_token') {
+                $column = 'rememberToken()';
+            } else {
+                $extra = '';
+                if (!empty($att['unique'])) {
+                    $extra = '->unique()';
+                } else if (!empty($att['nullable'])) {
+                    $extra = '->nullable()';
+                }
+                $column = "{$att['type']}('{$att['name']}')$extra";
+            }
+            $blueprint .= "
+            \$table->$column;";
+        }
+
+        return str_replace(
+            ['{{ blueprint }}'],
+            $blueprint,
+            parent::populateStub($name, $stub, $table)
+        );
     }
 }

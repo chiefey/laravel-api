@@ -2,8 +2,9 @@
 
 namespace App\Console\Commands;
 
-use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
+use Symfony\Component\Console\Input\InputOption;
 
 class ControllerMakeCommand extends \Illuminate\Routing\Console\ControllerMakeCommand
 {
@@ -37,8 +38,8 @@ class ControllerMakeCommand extends \Illuminate\Routing\Console\ControllerMakeCo
         $properties = $filtered->map(function ($item) use ($modelName) {
             return "     *              @OA\Property(
      *                  property=\"" . Str::camel($item) . "\",
-     *                  ref=\"#/components/schemas/$modelName/properties/" . Str::camel($item) . "\"
-     *              )";
+     *                  ref=\"#/components/schemas/$modelName/properties/" . Str::camel($item) . '"
+     *              )';
         })->implode(",\n");
 
         $replace['{{ postRequired }}'] = $required;
@@ -47,6 +48,35 @@ class ControllerMakeCommand extends \Illuminate\Routing\Console\ControllerMakeCo
         return str_replace(
             array_keys($replace), array_values($replace), parent::buildClass($name)
         );
+    }
+
+    /**
+     * Generate the form requests for the given model and classes.
+     *
+     * @param  string  $modelName
+     * @param  string  $storeRequestClass
+     * @param  string  $updateRequestClass
+     * @return array
+     */
+    protected function generateFormRequests($modelClass, $storeRequestClass, $updateRequestClass)
+    {
+        $storeRequestClass = 'Store' . class_basename($modelClass) . 'Request';
+
+        $this->call('make:request', [
+            'name' => $storeRequestClass,
+            '--model' => class_basename($modelClass),
+            '--definition' => $this->option('definition'),
+        ]);
+
+        $updateRequestClass = 'Update' . class_basename($modelClass) . 'Request';
+
+        $this->call('make:request', [
+            'name' => $updateRequestClass,
+            '--model' => class_basename($modelClass),
+            '--definition' => $this->option('definition'),
+        ]);
+
+        return [$storeRequestClass, $updateRequestClass];
     }
 
     /**
@@ -64,6 +94,18 @@ class ControllerMakeCommand extends \Illuminate\Routing\Console\ControllerMakeCo
             '{{ modelUpperSnake }}' => Str::upper(Str::snake(class_basename($modelClass))),
             '{{ modelKebab }}' => Str::kebab(class_basename($modelClass)),
             '{{ modelCamel }}' => Str::camel(class_basename($modelClass))
+        ]);
+    }
+
+    /**
+     * Get the console command options.
+     *
+     * @return array
+     */
+    protected function getOptions()
+    {
+        return array_merge(parent::getOptions(), [
+            ['definition', null, InputOption::VALUE_REQUIRED, 'Indicates the definition of the generated model']
         ]);
     }
 }

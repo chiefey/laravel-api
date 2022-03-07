@@ -10,15 +10,44 @@ use Symfony\Component\Console\Input\InputOption;
 class ModelMakeCommand extends IlluminateModelMakeCommand
 {
     /**
-     * Get the stub file for the generator.
+     * Create a migration file for the model.
      *
-     * @return string
+     * @return void
      */
-    protected function getStub()
+    protected function createMigration()
     {
-        return $this->option('swagger')
-            ? $this->resolveStubPath('/stubs/model.swagger.stub')
-            : parent::getStub();
+        $table = Str::snake(Str::pluralStudly(class_basename($this->argument('name'))));
+
+        if ($this->option('pivot')) {
+            $table = Str::singular($table);
+        }
+
+        $this->call('make:migration', [
+            'name' => "create_{$table}_table",
+            '--create' => $table,
+            '--definition' => $this->option('definition'),
+        ]);
+    }
+
+    /**
+     * Create a controller for the model.
+     *
+     * @return void
+     */
+    protected function createController()
+    {
+        $controller = Str::studly(class_basename($this->argument('name')));
+
+        $modelName = $this->qualifyClass($this->getNameInput());
+
+        $this->call('make:controller', array_filter([
+            'name' => "{$controller}Controller",
+            '--model' => $this->option('resource') || $this->option('api') ? $modelName : null,
+            '--api' => $this->option('api'),
+            '--requests' => $this->option('requests') || $this->option('all'),
+            '--force' => $this->option('force'),
+            '--definition' => $this->option('definition'),
+        ]));
     }
 
     /**
